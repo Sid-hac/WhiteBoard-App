@@ -6,10 +6,10 @@ import { redirect } from "next/navigation"
 
 const Page = () => {
 
-  const { data: session, status } = useSession({
+  const { data: session , status } = useSession({
     required: true,
     onUnauthenticated() {
-      redirect("/api/auth/signin")
+      redirect("/api/auth/signin?callback=/whiteboard")
     }
   })
 
@@ -23,7 +23,7 @@ const Page = () => {
   }
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-full h-full">
       <div className="w-full h-full flex flex-col justify-center items-center " >
         welcome
         {session ? <p>active session</p> : <p>failed</p>}

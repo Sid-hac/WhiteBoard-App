@@ -2,6 +2,7 @@ import NextAuth, { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CreadentialProvider from "next-auth/providers/credentials"
+import { redirect } from "next/navigation";
 
 export const authOptions: AuthOptions = {
 
@@ -48,10 +49,15 @@ export const authOptions: AuthOptions = {
         }),
     ],
     theme: {
-        colorScheme: "light", // "auto" | "dark" | "light"
+        colorScheme: "auto", // "auto" | "dark" | "light"
         brandColor: "", // Hex color code
         logo: "", // Absolute URL to image
         buttonText: "" // Hex color code
+    },
+    callbacks : {
+        async redirect(){
+              return '/'
+        }
     }
 
 }
