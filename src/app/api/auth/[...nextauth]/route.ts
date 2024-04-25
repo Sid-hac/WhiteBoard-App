@@ -2,7 +2,6 @@ import NextAuth, { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CreadentialProvider from "next-auth/providers/credentials"
-import { redirect } from "next/navigation";
 
 export const authOptions: AuthOptions = {
 
@@ -56,7 +55,7 @@ export const authOptions: AuthOptions = {
     },
     callbacks : {
         async redirect(){
-              return '/'
+              return '/whiteboard'
         }
     }
 

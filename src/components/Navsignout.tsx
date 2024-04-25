@@ -20,9 +20,9 @@ const Navsignout = () => {
         
    }
     return (
-        <Button>
+        <Button className="max-sm:hidden" >
             {session ? 
-              <AlertDialog>
+              <AlertDialog >
               <AlertDialogTrigger>Sign out</AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

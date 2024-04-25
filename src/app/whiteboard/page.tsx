@@ -1,5 +1,6 @@
 "use client"
 
+import Menu from "@/components/Menu"
 import { Loader } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
@@ -25,8 +26,7 @@ const Page = () => {
   return (
     <div className="w-full h-full">
       <div className="w-full h-full flex flex-col justify-center items-center " >
-        welcome
-        {session ? <p>active session</p> : <p>failed</p>}
+         <Menu/>
       </div>
 
     </div>
