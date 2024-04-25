@@ -3,7 +3,7 @@ import Link from "next/link";
 
 
 
-const Home = async () => {
+const Home = () => {
 
 
   return (

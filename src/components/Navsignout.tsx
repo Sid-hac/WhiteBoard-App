@@ -13,9 +13,9 @@ const Navsignout = () => {
 
     const {data : session} = useSession()
     
-    const handleSignout = async() => {
+    const handleSignout = () => {
        
-        await signOut();
+         signOut();
         router.push("/")
         
    }
@@ -30,7 +30,7 @@ const Navsignout = () => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleSignout} >Continue</AlertDialogAction>
+                  <AlertDialogAction  onClick={handleSignout} >Continue</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

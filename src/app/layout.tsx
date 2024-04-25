@@ -1,9 +1,12 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Provider from "@/components/Provider";
+import Sprovider from "@/components/Sprovider";
 import Nav from "@/components/Nav";
 import { cn } from "@/lib/utils";
+
+import { Providers } from "@/lib/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider>
-        <body className={cn(inter.className , 'relative')}>
-          <Nav/>
-          {children}
-        </body>
-      </Provider>
+      <Providers >
+        <Sprovider>
+          <body className={cn(inter.className, 'relative')}>
+            <Nav />
+            {children}
+          </body>
+        </Sprovider>
+      </Providers>
     </html>
   );
 }

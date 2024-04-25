@@ -1,9 +1,12 @@
 "use client"
-
+import Board from "@/components/Board"
 import Menu from "@/components/Menu"
+import Toolbox from "@/components/Toolbox"
 import { Loader } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
+
+
 
 const Page = () => {
 
@@ -22,16 +25,20 @@ const Page = () => {
       </div>
     )
   }
-
+  
   return (
     <div className="w-full h-full">
       <div className="w-full h-full flex flex-col justify-center items-center " >
-         <Menu/>
+         <Menu/> 
+         <Toolbox/>
+          <Board/>
       </div>
 
     </div>
 
-  )
-}
+)
+  }
+
+
 
 export default Page
