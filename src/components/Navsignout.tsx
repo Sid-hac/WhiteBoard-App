@@ -20,23 +20,24 @@ const Navsignout = () => {
         
    }
     return (
-        <Button className="max-sm:hidden" >
-            {session ? 
-              <AlertDialog >
-              <AlertDialogTrigger>Sign out</AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction  onClick={handleSignout} >Continue</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-             
-            : <Link href='/api/auth/signin' >Sign in</Link>}
-        </Button>
+        <div>
+          {session ? 
+            <AlertDialog >
+            <AlertDialogTrigger>Sign out</AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction  onClick={handleSignout} >Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+           
+          : <Link href='/api/auth/signin' >Sign in</Link>}
+      
+        </div>
     )
 }
 

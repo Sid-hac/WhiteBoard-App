@@ -1,18 +1,18 @@
  
   
-  import { COLORS, MENU_ITEMS } from "@/constants";
+  import { MENU_ITEMS , COLORCANVAS } from "@/constants";
 import { createSlice } from "@reduxjs/toolkit";
 
 
   const initialState = {
      [MENU_ITEMS.PENSIL] :{ 
            
-         color : COLORS.BLACK,
+         color : COLORCANVAS.BLACK,
          size : 1,
      },
      [MENU_ITEMS.ERASER] :{
         
-         color : COLORS.WHITE,
+         color : COLORCANVAS.WHITE,
          size : 1,
      }
   }

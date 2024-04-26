@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { COLORCANVAS, COLORS, MENU_ITEMS } from '../../src/constants'
 import { changeBrushSize, changeColor } from '@/lib/slices/toolboxSlice';
 import { ChangeEvent } from 'react';
+import { socket } from '@/socket/socket';
 
 
 
@@ -20,12 +21,15 @@ const Toolbox = () => {
     const dispatch = useAppDispatch();
 
     const changeSizeHandler = (e : ChangeEvent<HTMLInputElement>) => {
-           dispatch(changeBrushSize({item : activeMenuItem , size: e.target.value}))
+           dispatch(changeBrushSize({item : activeMenuItem , size: Number(e.target.value)}))
+           socket.emit("config ", {color , size :Number( e.target.value)})
     }
 
-    const handleColorChange = (color : string) => {
+    const handleColorChange = (color: string )=> {
            
         dispatch(changeColor({item : activeMenuItem , color : color}))
+        socket.emit("config" , {color : color , size})
+
     }
 
     return (
@@ -38,7 +42,7 @@ const Toolbox = () => {
                         <div className={`bg-${COLORS.BLACK} w-6 h-6 col-span-1 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORS.BLACK)} />
                             <div className={`bg-${COLORS.BLUE} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.BLUE)} />
                             <div className={`bg-${COLORS.GREEN} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.GREEN)} />
-                             <div className={`bg-${COLORS.ORANGE} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.ORANGE)}  />
+                             <div className={`bg-${COLORS.ORANGE} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.ORANGE)} />
                              <div className={`bg-${COLORS.RED} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.RED)} />
                             <div className={`bg-${COLORS.YELLOW} w-6 h-6 border border-black hover:scale-110 rounded-sm`} onClick={() => handleColorChange(COLORCANVAS.YELLOW)} />
                             <div className={`bg-${COLORS.WHITE} w-6 h-6 border border-black hover:scale-110 rounded-sm `} onClick={() => handleColorChange(COLORCANVAS.WHITE)} />
