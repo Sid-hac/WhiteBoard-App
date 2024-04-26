@@ -1,7 +1,7 @@
 "use client"
 import { MENU_ITEMS } from "@/constants"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks"
-import { menuItemClick } from "@/lib/slices/menuslice"
+import { actionMenuClick, menuItemClick } from "@/lib/slices/menuslice"
 import { cn } from "@/lib/utils"
 
 import { Eraser, FileDownIcon, Pen, Redo, Undo } from "lucide-react"
@@ -16,6 +16,9 @@ const Menu = () => {
    const hancleClick = (itemName : string) => {
          
       dispatch(menuItemClick(itemName))
+   }
+   const handleActionClick = (itemName: any) => {
+      dispatch(actionMenuClick(itemName))
    }
 
   return (
@@ -33,13 +36,13 @@ const Menu = () => {
                   )} onClick={() => hancleClick(MENU_ITEMS.ERASER)} >
                      <Eraser width={25} height={25} />
                   </div>
-                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " >
+                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.UNDO)} >
                      <Undo width={25} height={25} />
                   </div >
-                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " >
+                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.REDO)} >
                      <Redo width={25} height={25} />
                   </div>
-                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " >
+                  <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.DOWNLOAD)}>
                      <FileDownIcon width={25} height={25} />
                   </div>
             </div>

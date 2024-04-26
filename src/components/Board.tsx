@@ -1,7 +1,10 @@
 "use client"
 
-import { useAppSelector } from "@/lib/hooks";
+import { MENU_ITEMS } from "@/constants";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { actionMenuClick } from "@/lib/slices/menuslice";
 import { useEffect, useRef } from "react"
+
 
 
 
@@ -9,11 +12,32 @@ import { useEffect, useRef } from "react"
 
 const Board = () => {
 
-  const activeMenuItem = useAppSelector((state) => state.menu.activeMenuItem)
+  const {activeMenuItem , actionMenuItem} = useAppSelector((state) => state.menu)
   const { color, size } = useAppSelector((state) => state.toolbox[activeMenuItem])
 
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d");
+
+    if(actionMenuItem === MENU_ITEMS.DOWNLOAD){
+        
+         const URL = canvas.toDataURL()
+         const anchor = document.createElement("a");
+         anchor.href = URL;
+         anchor.download = "drawing.png";
+         anchor.click();
+         dispatch(actionMenuClick(null))
+    }
+
+  },[actionMenuItem, dispatch])
+  
+  
 
   useEffect(() => {
 
