@@ -20,7 +20,7 @@ const Page = () => {
 
   if (status === "loading") {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-screen flex justify-center items-center">
         <Loader width={50} height={50} className=" animate-spin" />
       </div>
     )

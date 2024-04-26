@@ -5,11 +5,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { actionMenuClick } from "@/lib/slices/menuslice";
 import { useEffect, useRef } from "react"
 
-
-
-
-
-
 const Board = () => {
 
   const {activeMenuItem , actionMenuItem} = useAppSelector((state) => state.menu)
@@ -17,6 +12,8 @@ const Board = () => {
 
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
+  const drawHistory = useRef<ImageData[]>([])
+  const historyPointer = useRef(0);
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -32,8 +29,19 @@ const Board = () => {
          anchor.href = URL;
          anchor.download = "drawing.png";
          anchor.click();
-         dispatch(actionMenuClick(null))
-    }
+        }else if(actionMenuItem === MENU_ITEMS.UNDO){
+          
+          if(historyPointer.current > 0) historyPointer.current--
+          
+          const imageData = drawHistory.current[historyPointer.current]
+          ctx?.putImageData(imageData , 0 , 0)
+        }else if(actionMenuItem === MENU_ITEMS.REDO){
+            
+          if(historyPointer.current < drawHistory.current.length - 1) historyPointer.current++
+          const imageData = drawHistory.current[historyPointer.current]
+          ctx?.putImageData(imageData , 0 , 0)
+        }
+        dispatch(actionMenuClick(null))
 
   },[actionMenuItem, dispatch])
   
@@ -70,8 +78,13 @@ const Board = () => {
     }
     const handleMouseUp = (e: any) => {
       shouldDraw.current = false;
+      const imageData = ctx?.getImageData(0 , 0, canvas.width, canvas.height)
 
-
+      if (imageData){
+        drawHistory.current.push(imageData);
+      }
+      historyPointer.current = drawHistory.current.length - 1;
+      
     }
 
     canvas.addEventListener('mousedown', handleMouseDown)
