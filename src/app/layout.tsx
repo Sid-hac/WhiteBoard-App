@@ -21,10 +21,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <Providers >
         <Sprovider>
-          <body className={cn(inter.className, 'relative')}>
+          <body className={cn(inter.className, 'relative flex flex-col overflow-hidden')}>
             <Nav />
             {children}
           </body>

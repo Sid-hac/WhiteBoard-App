@@ -17,7 +17,7 @@ const Nav = async () => {
 
   return (
 
-    <nav className=' flex justify-between items-center sticky h-16 bg-slate-100 p-8'>
+    <nav className=' flex justify-between items-center h-16 bg-slate-100 p-8'>
       <div className='flex justify-center items-center gap-2' >
         <Image src={logo} width={40} height={40} alt='logo' />
         <h1 className='text-black text-2xl font-bold font-mono max-sm:hidden'>DoodleBoard</h1>
