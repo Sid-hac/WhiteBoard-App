@@ -25,17 +25,17 @@ export default function RootLayout({
     <html lang="en" >
       <Providers >
         <Sprovider>
-          <body className={cn(inter.className, 'relative flex flex-col overflow-hidden')}>
-              
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Nav />
-            {children}
-          </ThemeProvider>
+          <body className={cn(inter.className, 'relative flex flex-col overflow-x-hidden')}>
+
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Nav />
+              {children}
+            </ThemeProvider>
           </body>
         </Sprovider>
       </Providers>
