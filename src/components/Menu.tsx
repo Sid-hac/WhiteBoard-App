@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils"
 import { socket } from "@/socket/socket"
 
 import { Eraser, FileDownIcon, Pen, Redo, Undo } from "lucide-react"
+import { useTheme } from "next-themes"
 import React, { useEffect } from "react"
 // import { useDispatch } from "react-redux"
 
 
 const Menu = () => {
    const dispatch = useAppDispatch()
+   const {theme} = useTheme()
   
    const socketClickHandler = (itemname : string) => {
       console.log(itemname);
@@ -45,22 +47,22 @@ const Menu = () => {
                    {"bg-purple-400" : activeMenuItem === MENU_ITEMS.PENSIL},
                    {"hover:bg-purple-200" : activeMenuItem !== MENU_ITEMS.PENSIL}
                   )} onClick={() => hancleClick(MENU_ITEMS.PENSIL)}  >
-                     <Pen width={25} height={25} />
+                     <Pen width={25} height={25} className={`${theme ? 'text-black' : 'text-white'}`} />
                   </div>
                   <div className={cn("object-contain  hover:border-purple-400 p-2 rounded-md " , 
                    {"bg-purple-400" : activeMenuItem === MENU_ITEMS.ERASER},
                    {"hover:bg-purple-200" : activeMenuItem !== MENU_ITEMS.ERASER}
                   )} onClick={() => hancleClick(MENU_ITEMS.ERASER)} >
-                     <Eraser width={25} height={25} />
+                     <Eraser width={25} height={25} className={`${theme ? 'text-black' : 'text-white'}`} />
                   </div>
                   <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.UNDO)} >
-                     <Undo width={25} height={25} />
+                     <Undo width={25} height={25} className={`${theme ? 'text-black' : 'text-white'}`} />
                   </div >
                   <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.REDO)} >
-                     <Redo width={25} height={25} />
+                     <Redo width={25} height={25} className={`${theme ? 'text-black' : 'text-white'}`}/>
                   </div>
                   <div className="object-contain  hover:bg-purple-200 hover:border-purple-400 p-2 rounded-md " onClick={() => handleActionClick(MENU_ITEMS.DOWNLOAD)}>
-                     <FileDownIcon width={25} height={25} />
+                     <FileDownIcon width={25} height={25} className={`${theme ? 'text-black' : 'text-white'}`} />
                   </div>
             </div>
          </div>

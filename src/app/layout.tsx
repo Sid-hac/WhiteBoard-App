@@ -7,6 +7,7 @@ import Nav from "@/components/Nav";
 import { cn } from "@/lib/utils";
 
 import { Providers } from "@/lib/Providers";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +26,16 @@ export default function RootLayout({
       <Providers >
         <Sprovider>
           <body className={cn(inter.className, 'relative flex flex-col overflow-hidden')}>
+              
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
             <Nav />
             {children}
+          </ThemeProvider>
           </body>
         </Sprovider>
       </Providers>
