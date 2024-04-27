@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "./ui/button"
+import { Button, buttonVariants } from "./ui/button"
 import { signOut, useSession } from "next-auth/react"
 import {  useRouter } from "next/navigation"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog"
@@ -20,7 +20,7 @@ const Navsignout = () => {
         
    }
     return (
-        <div>
+        <div className={buttonVariants()} >
           {session ? 
             <AlertDialog >
             <AlertDialogTrigger>Sign out</AlertDialogTrigger>
