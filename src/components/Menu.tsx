@@ -3,19 +3,36 @@ import { MENU_ITEMS } from "@/constants"
 import { useAppDispatch, useAppSelector } from "@/lib/hooks"
 import { actionMenuClick, menuItemClick } from "@/lib/slices/menuslice"
 import { cn } from "@/lib/utils"
+import { socket } from "@/socket/socket"
 
 import { Eraser, FileDownIcon, Pen, Redo, Undo } from "lucide-react"
-import React from "react"
+import React, { useEffect } from "react"
 // import { useDispatch } from "react-redux"
 
 
 const Menu = () => {
-   
    const dispatch = useAppDispatch()
+  
+   const socketClickHandler = (itemname : string) => {
+      console.log(itemname);
+      
+      dispatch(menuItemClick(itemname))
+   }
+
+   useEffect(() => {
+         socket.on('activeItem' , socketClickHandler )
+
+         return()=>{
+            socket.off('activeItem' , socketClickHandler )
+         }
+   })
+
+
    const activeMenuItem = useAppSelector((state) => state.menu.activeMenuItem)
-   const hancleClick = (itemName : string) => {
-         
+   const hancleClick = (itemName : string) => {   
       dispatch(menuItemClick(itemName))
+      socket.emit('activeItem' , itemName)
+
    }
    const handleActionClick = (itemName: any) => {
       dispatch(actionMenuClick(itemName))
