@@ -14,16 +14,25 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from './ui/input'
 import { Button, buttonVariants } from './ui/button'
 import { socket } from '@/socket/socket'
+import { Toast } from './ui/toast'
+import { useToast } from './ui/use-toast'
+import { LogOut } from 'lucide-react'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card'
+import { useRouter } from 'next/navigation'
 
 
 const Nav = () => {
 
   const { data: session } = useSession();
   const { theme } = useTheme()
+  const { toast } = useToast()
+  const router = useRouter()
 
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const [roomName, setRoomName] = useState<string>('')
   const [joinRoomName, setJoinRoomName] = useState<string>('')
+  const [isJoined, setIsJoined] = useState<boolean>(false)
+  const [latestRoom, setLatestRoom] = useState<string>('')
 
 
   useEffect(() => {
@@ -32,13 +41,20 @@ const Nav = () => {
       console.log(data)
     })
 
-    socket.on('newUser' , (data) => {
-      console.log(data);
-      
+    socket.on('newUser', ({ username, roomname }) => {
+      setIsJoined(true)
+      console.log(roomname);
+
+      setLatestRoom(roomname)
+
+      toast({
+        description: `${username} has joined`
+      })
     })
 
 
-  }, [])
+
+  }, [toast])
   if (!isMounted) {
     return null
   }
@@ -53,13 +69,16 @@ const Nav = () => {
   const createRoomHandler = () => {
 
     setRoomName('')
-    
-    socket.emit('createRoom', { roomName: roomName, userName : session?.user?.name as string , id: socket.id  })
+
+    socket.emit('createRoom', { roomName: roomName, userName: session?.user?.name as string, id: socket.id })
   }
 
   const createJoinHandler = () => {
     setJoinRoomName('')
-    socket.emit('joinRoom', { roomName: roomName, userName : session?.user?.name as string , id: socket.id  })
+    socket.emit('joinRoom', { roomName: joinRoomName, userName: session?.user?.name as string, id: socket.id })
+  }
+  const socketDisconnectHandler = () => {
+     router.refresh();
   }
 
 
@@ -71,22 +90,22 @@ const Nav = () => {
     )}>
       <div className='flex justify-center items-center gap-2' >
         <Link href='/' >
-          <Image src={logo} width={40} height={40} alt='logo' />
+          <Image src={logo} width={40} height={40} alt='logo'  />
         </Link>
         <h1 className={cn('text-black text-2xl font-bold font-mono max-sm:hidden',
           { 'text-white': theme === 'dark' }
         )}>DoodleBoard</h1>
       </div>
       <div className='flex justify-center items-center gap-2'>
-       {session && <DropdownMenu >
+        {session && !isJoined && <DropdownMenu >
           <DropdownMenuTrigger >
-            <Room name={'create'} varient={'default'}/>
+            <Room name={'create'} varient={'default'} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Give Name</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className='flex gap-2' asChild>
-              <Input value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder='Room name'/>
+              <Input value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder='Room name' />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuSeparator />
@@ -96,7 +115,21 @@ const Nav = () => {
 
           </DropdownMenuContent>
         </DropdownMenu>}
-       {session && <DropdownMenu >
+        {isJoined && <div>
+          <Button variant={'ghost'} className='flex gap-2 ' >
+            <h3 className='text-xl font-bold '>{latestRoom}</h3>
+            <HoverCard>
+              <HoverCardTrigger  >
+                <LogOut className='h-6 w-6 '  />
+              </HoverCardTrigger>
+              <HoverCardContent className='font-bold w-fit' onClick={socketDisconnectHandler} >
+                 Leave{" "}{latestRoom}
+              </HoverCardContent>
+            </HoverCard>
+
+          </Button>
+        </div>}
+        {session && !isJoined && <DropdownMenu >
           <DropdownMenuTrigger >
             <Room name={'Join'} varient={'outline'} />
           </DropdownMenuTrigger>
@@ -104,11 +137,11 @@ const Nav = () => {
             <DropdownMenuLabel>Room Name</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className='flex gap-2' asChild>
-              <Input value={joinRoomName} onChange={(e) => setJoinRoomName(e.target.value)} placeholder='Room name'/>
+              <Input value={joinRoomName} onChange={(e) => setJoinRoomName(e.target.value)} placeholder='Room name' />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuSeparator />
-            <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createJoinHandler} >
+            <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createJoinHandler}>
               Join room
             </DropdownMenuItem>
 

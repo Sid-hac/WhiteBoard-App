@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { Providers } from "@/lib/Providers";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
             >
               <Nav />
               {children}
+              <Toaster/>
             </ThemeProvider>
           </body>
         </Sprovider>
