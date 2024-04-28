@@ -5,6 +5,7 @@ import { Button, buttonVariants } from "./ui/button"
 import { signOut, useSession } from "next-auth/react"
 import {  useRouter } from "next/navigation"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog"
+import { cn } from "@/lib/utils"
 
 
 const Navsignout = () => {
@@ -20,7 +21,7 @@ const Navsignout = () => {
         
    }
     return (
-        <div className={buttonVariants()} >
+        <div className={cn(buttonVariants(),'hidden sm:flex')} >
           {session ? 
             <AlertDialog >
             <AlertDialogTrigger>Sign out</AlertDialogTrigger>
