@@ -76,6 +76,7 @@ const Board = () => {
     const drawLine = (x: any, y: any) => {
       ctx?.lineTo(x, y - 60);
       ctx?.stroke();
+      
     }
 
 
@@ -97,6 +98,7 @@ const Board = () => {
         drawHistory.current.push(imageData);
       }
       historyPointer.current = drawHistory.current.length - 1;
+      
 
     }
 

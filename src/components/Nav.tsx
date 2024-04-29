@@ -14,11 +14,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from './ui/input'
 import { Button, buttonVariants } from './ui/button'
 import { socket } from '@/socket/socket'
-import { Toast } from './ui/toast'
 import { useToast } from './ui/use-toast'
 import { LogOut } from 'lucide-react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card'
 import { useRouter } from 'next/navigation'
+import Mobileauth from './Mobileauth'
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer"
 
 
 const Nav = () => {
@@ -78,81 +79,146 @@ const Nav = () => {
     socket.emit('joinRoom', { roomName: joinRoomName, userName: session?.user?.name as string, id: socket.id })
   }
   const socketDisconnectHandler = () => {
-     router.refresh();
+    router.refresh();
   }
 
 
 
   return (
 
-    <nav className={cn(' flex justify-between items-center h-16 bg-slate-100 p-8',
+    <nav className={cn('flex justify-between sm:flex sm:justify-between sm:items-center h-16 bg-slate-100 p-8',
       { 'bg-slate-950 border-b-[1px] border-slate-700': isDark }
     )}>
       <div className='flex justify-center items-center gap-2' >
         <Link href='/' >
-          <Image src={logo} width={40} height={40} alt='logo'  />
+          <Image src={logo} width={40} height={40} alt='logo' />
         </Link>
         <h1 className={cn('text-black text-2xl font-bold font-mono max-sm:hidden',
           { 'text-white': theme === 'dark' }
         )}>DoodleBoard</h1>
       </div>
       <div className='flex justify-center items-center gap-2'>
-        {session && !isJoined && <DropdownMenu >
-          <DropdownMenuTrigger >
-            <Room name={'create'} varient={'default'} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Give Name</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2' asChild>
-              <Input value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder='Room name' />
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createRoomHandler} >
-              create room
-            </DropdownMenuItem>
 
-          </DropdownMenuContent>
-        </DropdownMenu>}
-        {isJoined && <div>
-          <Button variant={'ghost'} className='flex gap-2 ' >
-            <h3 className='text-xl font-bold '>{latestRoom}</h3>
-            <HoverCard>
-              <HoverCardTrigger  >
-                <LogOut className='h-6 w-6 '  />
-              </HoverCardTrigger>
-              <HoverCardContent className='font-bold w-fit' onClick={socketDisconnectHandler} >
-                 Leave{" "}{latestRoom}
-              </HoverCardContent>
-            </HoverCard>
+        <div className='hidden sm:flex sm:justify-center sm:items-center sm:gap-2 '>
+          {session && !isJoined && <DropdownMenu >
+            <DropdownMenuTrigger >
+              <Room name={'create'} varient={'default'} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Give Name</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className='flex gap-2' asChild>
+                <Input value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder='Room name' />
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createRoomHandler} >
+                create room
+              </DropdownMenuItem>
 
-          </Button>
-        </div>}
-        {session && !isJoined && <DropdownMenu >
-          <DropdownMenuTrigger >
-            <Room name={'Join'} varient={'outline'} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Room Name</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2' asChild>
-              <Input value={joinRoomName} onChange={(e) => setJoinRoomName(e.target.value)} placeholder='Room name' />
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createJoinHandler}>
-              Join room
-            </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>}
+          {isJoined && <div>
+            <Button variant={'ghost'} className='flex gap-2 ' >
+              <h3 className='text-xl font-bold '>{latestRoom}</h3>
+              <HoverCard>
+                <HoverCardTrigger  >
+                  <LogOut className='h-6 w-6 ' />
+                </HoverCardTrigger>
+                <HoverCardContent className='font-bold w-fit' onClick={socketDisconnectHandler} >
+                  Leave{" "}{latestRoom}
+                </HoverCardContent>
+              </HoverCard>
 
-          </DropdownMenuContent>
-        </DropdownMenu>}
+            </Button>
+          </div>}
+          {session && !isJoined && <DropdownMenu >
+            <DropdownMenuTrigger>
+              <Room name={'Join'} varient={'outline'} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Room Name</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className='flex gap-2' asChild>
+                <Input value={joinRoomName} onChange={(e) => setJoinRoomName(e.target.value)} placeholder='Room name' />
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className={cn(buttonVariants(), 'w-full hover:cursor-pointer hover:outline-none hover:bg-purple-500')} onClick={createJoinHandler}>
+                Join room
+              </DropdownMenuItem>
+
+            </DropdownMenuContent>
+          </DropdownMenu>}
 
 
-        <Navsignout />
-        <ToggleMode />
+          <Navsignout />
+          <ToggleMode />
 
-        {session && <Image src={session.user!.image || ""} alt={session.user?.name || "profile_img"} width={36} height={36} className='rounded-full' />}
+          {session && <Image src={session.user!.image || ""} alt={session.user?.name || "profile_img"} width={36} height={36} className='rounded-full' />}
+
+        </div>
+        <div className='sm:hidden flex' >
+
+          {session ? <DropdownMenu >
+            <DropdownMenuTrigger>
+              {session && <Image src={session.user!.image || ""} alt={session.user?.name || "profile_img"} width={36} height={36} className='rounded-full' />}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem asChild >
+                <Drawer>
+                  <DrawerTrigger>Create Room</DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle className='text-sm' >Create Room</DrawerTitle>
+                      <DrawerDescription>Give Name Of Your Choise</DrawerDescription>
+                    </DrawerHeader>
+                    <div>
+                    <Input value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder='Room name' />
+                    </div>
+                    <DrawerFooter>
+                      <Button onClick={createRoomHandler} >Submit</Button>
+                      <DrawerClose>
+                        <Button variant="outline">Cancel</Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild >
+                <Drawer>
+                  <DrawerTrigger>Join Room</DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle className='text-sm' >Join Room</DrawerTitle>
+                      <DrawerDescription>Give Name Of Your Choise</DrawerDescription>
+                    </DrawerHeader>
+                    <div>
+                      <Input value={joinRoomName} onChange={(e) => setJoinRoomName(e.target.value)} placeholder='Room name' />
+                    </div>
+                    <DrawerFooter>
+                      <Button onClick={createJoinHandler} >Submit</Button>
+                      <DrawerClose>
+                        <Button variant="outline">Cancel</Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem  >
+                <Mobileauth />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+            : <Mobileauth />
+          }
+        </div>
+
+
+
       </div>
     </nav>
   )
