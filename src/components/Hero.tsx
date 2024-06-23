@@ -46,7 +46,6 @@ const Hero = () => {
             <div className="absolute z-[1] -left-1/2 bottom-0 w-[50%] h-[50%] rounded-full pink__gradient " />
             {isDark && <div className="absolute z-[0] w-[60%] h-[60%] -right-[20%] top-10 rounded-full blue__gradient" />}
 
-
         </section>
 
     )

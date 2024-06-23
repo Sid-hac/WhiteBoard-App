@@ -66,5 +66,5 @@ const Toolbox = () => {
     )
 }
 
-export default Toolbox
+export default Toolbox;
 
